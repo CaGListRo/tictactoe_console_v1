@@ -1,15 +1,27 @@
 import os
 import sys
 
-def init_game(field_unit, won=False):
+def init_game(field_unit: list[str], won: bool = False) -> None:
+    """
+    Initialize the game with a given field unit and won status.
+    Args:
+    field_unit (list): A list representing the game field.
+    won (bool): A boolean indicating whether the game has been won or not.
+    """
     if won:
         for i in range(0, 10):
             field_unit.clear()
     for i in range(0, 10):
         field_unit.append(i + 1)
 
-
-def check_winning(field_unit):
+def check_winning(field_unit: list[str]) -> bool:
+    """
+    Check if the game has been won.
+    Args:
+    field_unit (list): A list representing the game field.
+    Returns:
+    bool: A boolean indicating whether the game has been won or not.
+    """
     winning = False
     # check columns
     for i in range(0, 3):
@@ -30,14 +42,29 @@ def check_winning(field_unit):
         winning = True
     return winning
 
-def player_swab(player):
+def player_swab(player: int) -> int:
+    """
+    Get the player's move.
+    Args:
+    player (int): The current player.
+    Returns:
+    player (int): The next player.
+    """
     if player == 1:
         player = 2
     else:
         player = 1
     return player
 
-def get_input(player, field_unit):
+def get_input(player: int, field_unit: list) -> int:
+    """
+    Get the player's move.
+    Args:
+    player (int): The current player.
+    field_unit (list): A list representing the game field.
+    Returns:
+    int: The player's move.
+    """
     while True:
         field = input(f"Spieler {player} ist am Zug. Zahl des Feldes eingeben: ")
         if field.isdigit():
@@ -53,7 +80,12 @@ def get_input(player, field_unit):
             sys.stdout.write("Bitte eine Zahl eingeben...\n") 
     return field          
 
-def print_field(field_unit):
+def print_field(field_unit: list[str]) -> None:
+    """
+    Print the game field.
+    Args:
+    field_unit (list): A list representing the game field.
+    """
     os.system("cls")
     column_counter = 0
     line_counter = 0
@@ -70,19 +102,19 @@ def print_field(field_unit):
         else:
             sys.stdout.write(" | " + str(field_unit[i]))
 
-def main():
-    field_unit = []
+def main() -> None:
+    field_unit: list[str] = []
     init_game(field_unit)
-    run = True
-    player = 1
-    turn_counter = 0
+    run: bool = True
+    player: int = 1
+    turn_counter: int = 0
     while run:
         print_field(field_unit)
-        field = get_input(player, field_unit)
+        field: int = get_input(player, field_unit)
         
         if player == 1:
             field_unit[field - 1] = "X"
-            won = check_winning(field_unit)
+            won: bool = check_winning(field_unit)
             if not won:
                 player = player_swab(player)
         elif player == 2:
@@ -105,4 +137,6 @@ def main():
             else:
                 print("Tschüss...")
 
-main()
+
+if __name__ == "__main__":
+    main()
